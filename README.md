@@ -27,7 +27,11 @@ The following guide demonstrates how to generate CUDA code using GPU Coder, buil
 
 ## Architecture overview
 
+![alt text](/Architecture.PNG?raw=true)
+      
+## Steps
 
+1. Writing an entry point function in MATLAB
 
 
 
