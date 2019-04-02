@@ -60,8 +60,8 @@ Please see the MATLAB script `test_codegen.m` for more information
 
 - You need to do this from the command line using the AWS CLI
 - Please follow steps here to set up the AWS CLI on your development machine
-- Place your codegen folder and the appspec.yml file in one folder and navigate to the parent folder from the command line
-- The folder structure would look like:
+- Place your codegen directory and the appspec.yml file in one directory and navigate to the parent directory from the command line
+- The directory structure would look like:
   - temp
     - codegen
     - appspec.yml
@@ -70,7 +70,7 @@ Please see the MATLAB script `test_codegen.m` for more information
 
 ## Step 5. Deploy code in S3 bucket to an EC2 instance(s) or AutoScaling Group
 
-- Create a YAML file named ‘appspec.yml’ in the same folder that contains the codegen folder
+- Create a YAML file named ‘appspec.yml’ in the same directory that contains the codegen directory
 - This file tells AWS CodeDeploy the source and destination of your files
 - An example appspec.yml file is shown [here](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-example.html#appspec-file-example-server)
 - The deployment will fail if:
@@ -80,6 +80,20 @@ Please see the MATLAB script `test_codegen.m` for more information
 - Select S3 under Revision type
 - The revision location would be:  `s3://your-bucket-name/codegen.zip`
 - Complete by clicking on ‘Create deployment’
+
+## Step 6. Build executable on EC2 instance
+
+- SSH into the EC2 instance using the instructions [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
+- Navigate to the directory containing all the code generated files
+- Execute the following command from the command line:
+`nvcc -arch sm_35 -o classifier relative path/to/main.cu relative path/to/inputFile.a -I<relative path to codegen directory> -L"./<relative path to codegen directory>" -lmwjpegreader  -lcudart -lcudnn -lcudart -lcublas`
+- `lmwjpegreader` is needed if you are using the 'imread' MATLAB function in your MATLAB source code.
+- Please see this [documentation page](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#introduction) for more information on `nvcc`.
+
+
+
+
+
 
 
 
