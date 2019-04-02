@@ -87,7 +87,7 @@ Please see the MATLAB script `test_codegen.m` for more information
 - Navigate to the directory containing all the code generated files
 - Execute the following command from the command line:
 `nvcc -arch sm_35 -o classifier relative path/to/main.cu relative path/to/inputFile.a -I<relative path to codegen directory> -L"./<relative path to codegen directory>" -lmwjpegreader  -lcudart -lcudnn -lcudart -lcublas`
-- `lmwjpegreader` is needed if you are using the 'imread' MATLAB function in your MATLAB source code.
+- `lmwjpegreader` is needed if you are using the `imread` MATLAB function in your MATLAB source code.
 - Please see this [documentation page](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#introduction) for more information on `nvcc`.
 
 
