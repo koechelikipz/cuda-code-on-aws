@@ -32,6 +32,11 @@ The following guide demonstrates how to generate CUDA code using GPU Coder, buil
 ## Steps
 
 1. Writing an entry point function in MATLAB
+2. Generate a static library using GPU Coder
+3. Deploy generated code to an S3 bucket
+4. Deploy code in S3 bucket to an EC2 instance(s) or AutoScaling Group 
+5. Build executable on EC2 instance
+6. Create a simple web app to interact with the executable
 
 
 
