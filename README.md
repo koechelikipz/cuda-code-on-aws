@@ -29,24 +29,57 @@ The following guide demonstrates how to generate CUDA code using GPU Coder, buil
 
 ![alt text](/Architecture.PNG?raw=true)
       
-## Steps
+# Steps
 
-1. Writing an entry point function in MATLAB
+1. Write an entry point function in MATLAB
 2. Generate a static library using GPU Coder
-3. Deploy generated code to an S3 bucket
-4. Deploy code in S3 bucket to an EC2 instance(s) or AutoScaling Group 
-5. Build executable on EC2 instance
-6. Create a simple web app to interact with the executable
+3. Setup AWS environment
+4. Deploy generated code to an S3 bucket
+5. Deploy code in S3 bucket to an EC2 instance(s) or AutoScaling Group 
+6. Build executable on EC2 instance
+7. Create a simple web app to interact with the executable
 
+## Step 1. Write an entry point function
 
+Please see the MATLAB script `alexnet_predict.m` for more information
 
+## Step 2. Generate a static library using GPU Coder
 
+Please see the MATLAB script `test_codegen.m` for more information
 
+## Step 3. Setup AWS environment
 
+| AWS component  | steps |
+| ------------- | ------------- |
+| **IAM Roles**  | <ul><li>We need 2 IAM roles:<ul><li>One that allows EC2 instances to access services like S3 and CodeDeploy</li><li>One that allows CodeDeploy to access services like S3 and EC2</li></ul></li><li>Search and open IAM from Services</li><li>Click on Roles --> Create role --> Name your role</li><li>Click on permissions tab -> Attach policies</li><li>For the EC2 role, add ‘AmazonEC2RoleforAWSCodeDeploy’ and ‘AmazonS3FullAccess’ from the list of policies</li><li>For the CodeDeploy role, add ‘AWSCodeDeployRole’ and ‘AmazonS3FullAccess’ from the list of policies</li></ul>|
+| **EC2 Instance(s)**  | <ul><li>Configure your EC2 instance for CodeDeploy to work using steps described [here](https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-ec2-create.html)</li><li>Create an EC2 instance using the recommended [AMI](https://aws.amazon.com/marketplace/pp/B077GCZ4GR?qid=1554245914494&sr=0-1&ref_=srh_res_product_title) and p2.xlarge instance type</li><li>Verify if the CodeDeploy agent is running on the instance. The steps are described [here](https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-verify.html)</li></ul>  |
+| **S3 Bucket**  | <ul><li>Create an S3 bucket, so that the code generated files can be deployed from here</li><li>A S3 bucket was created in the same region as the EC2 instance and CodeDeploy deployment group for this demo.However, it is also possible to have a cross region AWS architecture</li><li>Go to the S3 Properties tab and enable Versioning</li><li>Go to the Permissions tab -> Bucket Policy</li><li>Please see the sample bucket policy in the repository</li><li>Replace the arn names with yours</li><li>You can find the AWS account number for your arn under the Support tab in the AWS console</li><li>Please see this [AWS documentation page](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-configure-bucket.html) for more information</li></ul>  |
+| **CodeDeploy**  | <p>You can also use [scp](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html#AccessingInstancesLinuxSCP) to upload the code generated files. However, AWS CodeDeploy is a free service that allows you to deploy applications from your development machine to one or more EC2 instances at once.</p><ul><li>Go to the AWS CodeDeploy console</li><li>Click on ‘Create application’</li><li>Name your application and select EC2 from the compute platform options</li><li>Click on ‘Create deployment group’ and name it</li><li>Select the service/IAM role created previously from the service role drop down</li><li>Choose deployment type based on your requirement</li><li>Select EC2 or AutoScaling groups in environment configuration based on your requirement. In this case I used an EC2 instance</li><li>If you are using just 1 EC2 instance uncheck load balancing and click Create deployment group</li></ul>  |
 
+## Step 4. Deploy generated code to an S3 bucket
 
+- You need to do this from the command line using the AWS CLI
+- Please follow steps here to set up the AWS CLI on your development machine
+- Place your codegen folder and the appspec.yml file in one folder and navigate to the parent folder from the command line
+- The folder structure would look like:
+  - temp
+    - codegen
+    - appspec.yml
+- Execute the following command in the command line:
+`aws deploy push --application-name <name of your CodeDeploy App> --s3-location s3://codegens3/codegen.zip --ignore-hidden-files`
 
+## Step 5. Deploy code in S3 bucket to an EC2 instance(s) or AutoScaling Group
 
+- Create a YAML file named ‘appspec.yml’ in the same folder that contains the codegen folder
+- This file tells AWS CodeDeploy the source and destination of your files
+- An example appspec.yml file is shown [here](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-example.html#appspec-file-example-server)
+- The deployment will fail if:
+  - YAML file has incorrect syntax
+  - You don’t have path permissions at the destination
+- Click on ‘Create deployment’
+- Select S3 under Revision type
+- The revision location would be:  `s3://your-bucket-name/codegen.zip`
+- Complete by clicking on ‘Create deployment’
 
 
 
