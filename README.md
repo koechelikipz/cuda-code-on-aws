@@ -92,8 +92,16 @@ Please see the MATLAB script `test_codegen.m` for more information
 
 ## Step 7. Create a simple web app to interact with the executable
 
-
-
+- Install Apache web server on EC2 instance: `sudo apt-get install apache2`
+- We are using PHP, to install PHP: `sudo apt-get install php libapache2-mod-php`
+- Change server root to `/var/www/` by editing file `/etc/apache2/sites-enabled/ 000-default.conf`
+- Add server root folder permissions for the user: `sudo chmod -R g+rw /var/www`
+- Restart server:  `sudo service apache2 restart`
+- Create a dummy php file in the server folder and check if the server is running by going to `<EC2 public DNS>/filename.php`
+- Place the files in `var/www` from the repository in your server root
+- The single page PHP webapp will let the user upload a JPEG file
+- Clicking on the predict button will call the CUDA executable
+- The webapp will parse and display the classification result
 
 
 
