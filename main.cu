@@ -21,9 +21,7 @@
 
 using namespace std;
 
-
 // Function Definitions
-
 
 static emxArray_char_T *argInit_1xUnbounded_char_T(const char * file)
 {
@@ -40,25 +38,14 @@ static emxArray_char_T *argInit_1xUnbounded_char_T(const char * file)
   return result;
 }
 
-
-
-//
-// Arguments    : emxArray_char_T
-// Return Type  : char_T
-//
-
 static void main_alexnet_predict(emxArray_char_T *filename, char_T* out_data)
 {
-  // char_T out_data[10473];
   int32_T out_size[2];
  
   // Call the entry-point 'alexnet_predict'.
   alexnet_predict(filename, out_data, out_size);
   emxDestroyArray_char_T(filename);
- // return out_data;
 }
-
-
 
 //
 // Arguments    : int32_T argc
@@ -68,9 +55,8 @@ static void main_alexnet_predict(emxArray_char_T *filename, char_T* out_data)
 //
 int32_T main(int32_T argc, const char * argv[])
 {
-    char_T result[10473];
-        emxArray_char_T *file;
-
+  char_T result[10473];
+  emxArray_char_T *file;
 
   // Initialize the application.
   alexnet_predict_initialize();
@@ -86,8 +72,6 @@ int32_T main(int32_T argc, const char * argv[])
   alexnet_predict_terminate();
   return 0;
 }
-
-
 
 // [EOF]
 //
