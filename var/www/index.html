@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Classification Service</title>
+
+</head>
+
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="files[]">
+        <input type="submit" value="Upload File" name="submit">
+    </form>
+
+    <p>
+        <button id="predictButton">Predict</button>
+    </p>
+    
+    <div id="div1"></div>
+    
+    <script>
+$(document).ready(function(){
+  $("#predictButton").click(function(){
+    
+  $.get('update.php', function(data) {
+                $("#div1").html(data);
+            });
+            
+            });
+            });
+</script>
+    
+<script src="upload.js"></script>  
+    
+</body>
+</html>
