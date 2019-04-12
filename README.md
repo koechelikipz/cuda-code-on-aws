@@ -88,7 +88,7 @@ Please see the MATLAB script `test_codegen.m` for more information
 - Execute the following command from the command line:
 `nvcc -arch sm_35 -o classifier relative path/to/main.cu relative path/to/inputFile.a -I<relative path to codegen directory> -L"./<relative path to codegen directory>" -lmwjpegreader  -lcudart -lcudnn -lcudart -lcublas`
 - `lmwjpegreader` is needed if you are using the `imread` MATLAB function in your MATLAB source code. 
-Please see the this [documentation page](https://www.mathworks.com/help/images/code-generation-for-image-processing.html) for more information
+Please see this [documentation page](https://www.mathworks.com/help/images/code-generation-for-image-processing.html) for more information on how to use image processing functions in code generation.
 - Please see this [documentation page](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#introduction) for more information on `nvcc`.
 
 ## Step 7. Create a simple web app to interact with the executable
