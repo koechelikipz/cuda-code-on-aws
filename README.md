@@ -27,7 +27,7 @@ The following guide demonstrates how to generate CUDA code using GPU Coder, buil
 
 ## Architecture overview
 
-![alt text](/Architecture.PNG?raw=true)
+![alt text](/Overview.PNG?raw=true)
       
 # Steps
 
