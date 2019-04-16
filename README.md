@@ -89,7 +89,7 @@ Please see the MATLAB script `test_codegen.m` for more information
 - Execute the following commands to create the static library using the updated paths:<br/>
 `make -f <path to make file> clean` followed by `make -f <path to make file>`
 - Execute the following command from the command line:
-`nvcc -arch sm_35 -o classifier relative path/to/main.cu relative path/to/inputFile.a -I<relative path to codegen directory> -L"./<relative path to codegen directory>" -lmwjpegreader  -lcudart -lcudnn -lcudart -lcublas`
+`nvcc -arch sm_35 -o classifier relative path/to/main.cu relative path/to/inputFile.a -I<relative path to codegen directory><br/> -L"./<relative path to codegen directory>" -lmwjpegreader  -lcudart -lcudnn -lcudart -lcublas`
 - `lmwjpegreader` is needed if you are using the `imread` MATLAB function in your MATLAB source code. 
 Please see this [documentation page](https://www.mathworks.com/help/images/code-generation-for-image-processing.html) for more information on how to use image processing functions in code generation.
 - Please see this [documentation page](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#introduction) for more information on `nvcc`.
