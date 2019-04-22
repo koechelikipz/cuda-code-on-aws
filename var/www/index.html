@@ -6,30 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <title>Classification Service</title>
-
+    <title>Classification Service</title>    
+    <style>    
+        body {
+            padding: 300px 0;
+            text-align: center;
+        }
+        label{  
+            color: #0f0f0f;
+            background-color: #C0C0C0;
+            border: solid 1px transparent;
+            border-radius: 18px;
+            font-size: 30px;
+            font-family: "Arial";
+            font-weight: 300;
+            padding: 2.5px
+            cursor: pointer;
+            transition: all .1s ease-in-out;
+        }
+        
+        
+        .Button
+        {
+            color: #fff;
+            background-color: #1c89ff;
+            border: solid 1px transparent;
+            border-radius: 18px;
+            font-size: 30px;
+            font-family: "Arial";
+            font-weight: 300;
+            padding: 2px
+            cursor: pointer;
+            transition: all .1s ease-in-out;
+        }
+        
+        div
+        {
+            font-family: "Arial";
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body>
+<body>  
     <form method="post" enctype="multipart/form-data">
-        <input type="file" name="files[]">
-        <input type="submit" value="Upload File" name="submit">
+        <input id="fileUpload" type="file" style="display:none;" name="files[]">
+        <label for="fileUpload">Browse </label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="uploadButton" type="submit" value="Upload" class="Button" name="submit">
     </form>
-
-    <p>
-        <button id="predictButton">Predict</button>
-    </p>
     
+    <p>
+        <button id="predictButton" class="Button">Predict</button>
+    </p>
+    &nbsp;
     <div id="div1"></div>
     
-    <script>
-$(document).ready(function(){
-  $("#predictButton").click(function(){
+<script>
+    $(document).ready(function(){
+        $("#predictButton").click(function(){
     
-  $.get('update.php', function(data) {
-                $("#div1").html(data);
-            });
-            
+    $.get('update.php', function(data) {
+        $("#div1").html(data);
+            }); 
             });
             });
 </script>
